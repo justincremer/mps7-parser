@@ -37,7 +37,7 @@ impl Data {
 impl fmt::Display for Data {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let res = format!(
-            "{:?}{}",
+            "{:?}\n{}",
             self.header,
             self.records
                 .iter()
