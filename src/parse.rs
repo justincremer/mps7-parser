@@ -93,7 +93,7 @@ pub struct Record {
     pub type_id: RecordType, // 0
     pub timestamp: u32,      // 1..4
     pub user_id: u64,        // 5..12
-    pub amount: Option<f64>, // pub amount: Option<f64>, // 13..20
+    pub amount: Option<f64>, // 13..20
 }
 
 impl Record {
