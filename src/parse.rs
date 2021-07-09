@@ -11,6 +11,10 @@ pub struct Data {
 }
 
 impl Data {
+    pub fn new(header: Header, records: Vec<Record>) -> Self {
+        Data { header, records }
+    }
+
     pub fn load(path: &str) -> Self {
         let file = File::open(path).unwrap();
         let mut reader = BufReader::new(file);
@@ -31,6 +35,21 @@ impl Data {
         }
 
         Data { header, records }
+    }
+
+    pub fn fold_by_record_type(&self, r_type: RecordType) -> f64 {
+        let filter_records = || self.records.iter().filter(|i| i.type_id == r_type);
+        match r_type {
+            RecordType::Credit | RecordType::Debit => {
+                filter_records().fold(0.0, |acc: f64, i: &Record| {
+                    acc + match i.amount {
+                        Some(n) => n,
+                        _ => 0.0,
+                    }
+                })
+            }
+            _ => filter_records().count() as f64,
+        }
     }
 }
 
